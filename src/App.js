@@ -233,7 +233,6 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react';
-//import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -254,10 +253,9 @@ class App extends Component {
       });
   }
 
-  handleProductClick = (productName) => {
-    // Perform the action you want when the product name is clicked
-    alert(`You clicked on ${productName}`);
-    // You can also navigate to a detail page or perform other actions here
+  handleProductClick = (ProductID) => {
+    // alert(`You clicked on ${ProductID}`);
+    this.props.history.push(`/detailPage/${ProductID}`);
   };
 
   render() {
@@ -280,7 +278,7 @@ class App extends Component {
                 {data.map((productData, index) => (
                   <tr key={index}>
                     <td><a href="#"
-                      className="no-style-link" onClick={() => this.handleProductClick(productData.ProductName)}>
+                      className="no-style-link" onClick={() => this.handleProductClick(productData.ProductID)}>
                       {productData.ProductName}
                     </a></td>
                     <td>{productData.Price}</td>

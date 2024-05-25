@@ -22,7 +22,41 @@ const getAllProducts = async () => {
     }
 }
 
-exports.getAllProducts = getAllProducts;
+const getDetailProducts = async (ProductID) => {
+    try {
+        const pool = await sql.connect(config);
+        const sqlQuery = `
+            SELECT 
+                p.ProductID,
+                p.ProductName,
+                p.Price,
+                p.Image,
+                p.CategoryID,
+                c.CategoryName,
+                c.Description,
+                p.Unit
+            FROM 
+                Products p
+            JOIN 
+                Categories c
+            ON 
+                p.CategoryID = c.CategoryID
+            WHERE 
+                p.ProductID = @ProductID
+        `;
+        const result = await pool.request()
+            .input('ProductID', sql.Int, ProductID)
+            .query(sqlQuery);
+        return result.recordset;
+    } catch (err) {
+        throw err;
+    }
+};
+
+module.exports = {
+    getAllProducts,
+    getDetailProducts
+};
 
 // async function getAllProducts() {
 //     try {
