@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 class DetailPage extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
+            productID: this.props.match.params.id, // Accessing ProductID from URL parameters
             product: null,
             loading: true,
             error: null,
@@ -11,9 +12,11 @@ class DetailPage extends Component {
     }
 
     componentDidMount() {
-        const { id } = this.props.match.params;
+        const { productID } = this.state;
+        // const { productId } = this.props.match.params.id;
 
-        fetch(`http://localhost:8080/api/products/${id}`)
+        // Fetch product details using productID
+        fetch(`http://localhost:8080/api/products/${productID}`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({ product: data, loading: false });
@@ -37,24 +40,10 @@ class DetailPage extends Component {
 
         return (
             <div>
-                <h2>Product Details</h2>
-                {product ? (
-                    <div>
-                        <h3>{product.ProductName}</h3>
-                        <p>Price: ${product.Price}</p>
-                        {product.Image ? (
-                            <img
-                                src={URL.createObjectURL(new Blob([new Uint8Array(product.Image.data)], { type: 'image/jpeg' }))}
-                                alt={product.ProductName}
-                                style={{ width: '300px', height: 'auto' }}
-                            />
-                        ) : (
-                            <span>Image not available</span>
-                        )}
-                    </div>
-                ) : (
-                    <p>Product not found.</p>
-                )}
+                {/* Render product details */}
+                <h2>{product.ProductName}</h2>
+                <p>Price: {product.Price}</p>
+                {/* Render other product details as needed */}
             </div>
         );
     }

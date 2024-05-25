@@ -233,6 +233,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import DetailPage from './detailPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -242,6 +244,8 @@ class App extends Component {
       data: [],
     }
   }
+
+
 
   componentDidMount() {
     fetch('http://localhost:8080/api/products')
@@ -254,12 +258,21 @@ class App extends Component {
   }
 
   handleProductClick = (ProductID) => {
-    // alert(`You clicked on ${ProductID}`);
-    this.props.history.push(`/detailPage/${ProductID}`);
+    const confirmed = window.confirm('Are you sure you want to view details?');
+    if (confirmed) {
+      // this.props.history.push(`DetailPage`);
+      // <Link to={`/detail/${ProductID}`}>View Details</Link>
+
+    }
   };
 
   render() {
     const { data } = this.state;
+
+    <Router>
+      <Route path="/detail/:id" component={DetailPage} />
+    </Router>
+
 
     return (
       <div>
