@@ -277,22 +277,31 @@ class App extends Component {
                 </tr>
               </thead>
               <tbody>
-                {
-                  this.state.data.map((productData, index) => (
-                    <tr key={index}>
-                      <td><a href="#"
-                        className="no-style-link" onClick={() => this.handleProductClick(productData.ProductName)}>
-                        {productData.ProductName}
-                      </a></td>
-                      <td>{productData.Price}</td>
-                      {/* <td><img
-                        src={productData.Image}
-                        alt={productData.ProductName}
-                        style={{ width: '100px', height: 'auto' }}
-                        onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/100"; }} // Fallback image
-                      /></td> */}
-                    </tr>
-                  ))}
+                {data.map((productData, index) => (
+                  <tr key={index}>
+                    <td><a href="#"
+                      className="no-style-link" onClick={() => this.handleProductClick(productData.ProductName)}>
+                      {productData.ProductName}
+                    </a></td>
+                    <td>{productData.Price}</td>
+                    <td>
+                      {productData.Image ? (
+                        <img
+                          src={URL.createObjectURL(new Blob([new Uint8Array(productData.Image.data)], { type: 'image/jpeg' }))}
+                          alt={productData.ProductName}
+                          style={{ width: '100px', height: 'auto' }}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "https://via.placeholder.com/100";
+                          }}
+                        />
+                      ) : (
+                        <span>Image not available</span>
+                      )}
+                    </td>
+
+                  </tr>
+                ))}
               </tbody>
             </table>
             }
