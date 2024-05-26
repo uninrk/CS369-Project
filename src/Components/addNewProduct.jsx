@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from '../Components/Navbar';
 
 
 const AddNewProduct = () => {
@@ -65,6 +66,8 @@ const AddNewProduct = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="container">
       <h2>Add New Product</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -176,6 +179,7 @@ const AddNewProduct = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 

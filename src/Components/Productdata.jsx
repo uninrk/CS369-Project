@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Header from '../Components/Navbar';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router-dom';
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -47,7 +52,21 @@ const ProductDetail = () => {
     }
 
     return (
-        <div>
+        <>
+        <Header/>
+        <Button
+            component={RouterLink}
+            to="/"
+            sx={{
+                position: 'absolute', left: 30, top: 60, transform: 'translate(-10px, 10px)' 
+            }}
+          >
+            <ArrowBackIosIcon sx={{ mr: 1 }} />
+            <Typography component="h5" variant="h6">
+              Back
+            </Typography>
+          </Button>
+        <div className="text-center">
             <h2>Product Detail</h2>
             {product ? (
                 <div>
@@ -61,6 +80,7 @@ const ProductDetail = () => {
                 <div>Product not found</div>
             )}
         </div>
+        </>
     );
 };
 
