@@ -5,6 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import { Link } from 'react-router-dom';
+
 
 function App() {
   return (
@@ -19,13 +21,17 @@ function App() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            {/* Icon content can go here */}
+            {/* Icon here */}
           </IconButton>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-            <Button color="inherit">Home</Button>
+          <Link to="/" style={{ color: 'transparent' }}>
+            <Button variant ="text" >Home</Button>
+          </Link>
             <Button color="inherit">Add New Product</Button>
           </Box>
-          <Button color="inherit">Login</Button>
+          <Link to="/login" style={{ color: 'inherit' }}>
+            <Button variant="contained">Login</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>

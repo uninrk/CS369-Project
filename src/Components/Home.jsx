@@ -1,20 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../App.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductDetail from './Components/Productdata';
-import Header from './Components/Navbar';
+import ProductDetail from '../Components/Productdata';
+import Header from '../Components/Navbar';
 
-class App extends Component {
+class Home extends Component {
   constructor() {
     super();
     this.state = {
       data: [],
     }
   }
-
-
 
   componentDidMount() {
     fetch('http://localhost:8080/api/products')
@@ -32,12 +30,7 @@ class App extends Component {
     return (
       <>
       <Header/>
-      <Router>
         <div>
-          <Routes>
-            <Route
-              path="/"
-              element={
                 <div>
                   <div className='row'>
                     <div className='col-md-12'>
@@ -82,15 +75,10 @@ class App extends Component {
                     </div>
                   </div>
                 </div>
-              }
-            />
-            <Route path="/product/:productId" element={<ProductDetail />} />
-          </Routes>
         </div>
-      </Router>
       </>
     );
   }
 }
 
-export default App;
+export default Home;
