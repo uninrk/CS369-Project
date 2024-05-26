@@ -2,6 +2,11 @@ let sqlconfig = require('./sqlconfig.js');
 const { getAllProducts, getDetailProducts } = require('./sqlconfig.js');
 var express = require('express');
 var app = express();
+const cors = require('cors');
+
+// Enable CORS
+app.use(cors());
+app.use(express.json());
 
 app.get('/api/products', async (req, res, next) => {
     try {

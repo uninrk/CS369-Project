@@ -1,6 +1,11 @@
 const sql = require("mssql");
 const express = require("express");
 var app = express();
+const cors = require('cors');
+
+// Enable CORS
+app.use(cors());
+app.use(express.json());
 
 const config = {
     server: 'INKU\\SQLEXPRESS',
@@ -29,12 +34,11 @@ const getDetailProducts = async (ProductID) => {
             SELECT 
                 p.ProductID,
                 p.ProductName,
-                p.Price,
-                p.Image,
+                p.UnitPrice,
                 p.CategoryID,
                 c.CategoryName,
                 c.Description,
-                p.Unit
+                p.UnitsInStock
             FROM 
                 Products p
             JOIN 
