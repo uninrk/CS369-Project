@@ -27,7 +27,9 @@ function App() {
           <Link to="/" style={{ color: 'transparent' }}>
             <Button variant ="text" >Home</Button>
           </Link>
+          <Link to="/addNewProduct" style={{ color: 'inherit' }}>
             <Button color="inherit">Add New Product</Button>
+          </Link>
           </Box>
           <Link to="/login" style={{ color: 'inherit' }}>
             <Button variant="contained">Login</Button>

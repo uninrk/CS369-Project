@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider,Route, Link } from 'react-router-dom'
 import Home from "./Components/Home.jsx";
 import Login from "./Components/Login"
+import AddNewProduct from "./Components/addNewProduct"
 // import Navbar from "./Components/Navbar"
 import Productdata from "./Components/Productdata.jsx"
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     {
       path:"/login",
       element: <Login/>
+    },
+    {
+      path:"/addNewProduct",
+      element: <AddNewProduct/>
     },
     {
       path: "/products/:productId",
