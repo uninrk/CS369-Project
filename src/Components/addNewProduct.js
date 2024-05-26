@@ -154,7 +154,7 @@ const AddNewProduct = () => {
         <div className="form-group">
           <label>Discontinued</label>
           <input
-            type="checkbox"
+            type="text"
             className="form-control"
             name="Discontinued"
             checked={formValue.Discontinued}
