@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductDetail from './Components/Productdata';
+import Header from './Components/Navbar';
 
 class App extends Component {
   constructor() {
@@ -29,6 +30,8 @@ class App extends Component {
     const { data } = this.state;
 
     return (
+      <>
+      <Header/>
       <Router>
         <div>
           <Routes>
@@ -39,7 +42,6 @@ class App extends Component {
                   <div className='row'>
                     <div className='col-md-12'>
                       <h1 className='mt-2'>Product Data</h1>
-                      <h3 className='mt-2'>log in</h3>
                       <table className="table table-striped">
                         <thead>
                           <tr>
@@ -86,6 +88,7 @@ class App extends Component {
           </Routes>
         </div>
       </Router>
+      </>
     );
   }
 }
