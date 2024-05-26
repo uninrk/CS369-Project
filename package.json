@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
+    "cor": "^0.0.0",
     "cors": "^2.8.5",
     "mssql": "^10.0.2",
     "react": "^18.2.0",
