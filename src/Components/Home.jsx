@@ -3,7 +3,7 @@ import '../App.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductDetail from '../Components/Productdata';
+import Productdata from '../Components/Productdata';
 import Header from '../Components/Navbar';
 
 class Home extends Component {
@@ -47,7 +47,7 @@ class Home extends Component {
                           {data.map((productData, index) => (
                             <tr key={index}>
                               <td>
-                                <Link to={`/product/${productData.ProductID}`} className="no-style-link">
+                                <Link to={`/products/${productData.ProductID}`} className="no-style-link">
                                   {productData.ProductName}
                                 </Link>
                               </td>
