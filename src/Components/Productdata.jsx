@@ -1,67 +1,194 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from '../Components/Navbar';
 
-const ProductDetail = () => {
-    const { productId } = useParams();
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const AddNewProduct = () => {
+  const [formValue, setFormValue] = useState({
+    ProductName: '',
+    SupplierID: '',
+    CategoryID: '',
+    QuantityPerUnit: '',
+    UnitPrice: '',
+    UnitsInStock: '',
+    UnitsOnOrder: '',
+    ReorderLevel: '',
+    Discontinued: false,
+    Image: null,
+  });
 
-    useEffect(() => {
-        const fetchProductDetail = async () => {
-            try {
-                console.log(`Fetching product details for product ID: ${productId}`);
-                const response = await fetch(`http://localhost:8080/api/products/${productId}`);
-                console.log(`Response status: ${response.status}`);
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error: Status ${response.status}`);
-                }
+  const handleImageChange = (e) => {
+    setFormValue({ ...formValue, Image: e.target.files[0] });
+  };
 
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new TypeError("Received content is not JSON");
-                }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-                const productData = await response.json();
-                setProduct(productData);
-                setError(null);
-            } catch (err) {
-                console.error('Fetch error:', err.message);
-                setError(err.message);
-                setProduct(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProductDetail();
-    }, [productId]);
-
-    if (loading) {
-        return <div>Loading...</div>;
+    const formData = new FormData();
+    for (const key in formValue) {
+      formData.append(key, formValue[key]);
     }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    try {
+      console.log('Submitting form data:', formData);
 
-    return (
-        <div>
-            <h2>Product Detail</h2>
-            {product ? (
-                <div>
-                    <p><strong>Product Name:</strong> {product.ProductName}</p>
-                    <p><strong>Price:</strong> {product.UnitPrice}</p>
-                    <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
-                    <p><strong>Category Name:</strong> {product.CategoryName}</p>
-                    <p><strong>Description:</strong> {product.Description}</p>
-                </div>
-            ) : (
-                <div>Product not found</div>
-            )}
-        </div>
-    );
+      const response = await fetch('http://localhost:8080/api/products/add', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`Failed to add product: ${response.statusText}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Response:', responseData);
+
+      alert(`Product added successfully! Product ID: ${responseData.productId}`);
+      setFormValue({
+        ProductName: '',
+        SupplierID: '',
+        CategoryID: '',
+        QuantityPerUnit: '',
+        UnitPrice: '',
+        UnitsInStock: '',
+        UnitsOnOrder: '',
+        ReorderLevel: '',
+        Discontinued: false,
+        Image: null,
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`An error occurred while adding the product: ${error.message}`);
+    }
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="container">
+        <h2>Add New Product</h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-group">
+            <label>Product Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="ProductName"
+              value={formValue.ProductName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Supplier ID</label>
+            <input
+              type="number"
+              className="form-control"
+              name="SupplierID"
+              value={formValue.SupplierID}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Category ID</label>
+            <input
+              type="number"
+              className="form-control"
+              name="CategoryID"
+              value={formValue.CategoryID}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Quantity Per Unit</label>
+            <input
+              type="text"
+              className="form-control"
+              name="QuantityPerUnit"
+              value={formValue.QuantityPerUnit}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Unit Price</label>
+            <input
+              type="number"
+              step="0.01"
+              className="form-control"
+              name="UnitPrice"
+              value={formValue.UnitPrice}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Units In Stock</label>
+            <input
+              type="number"
+              className="form-control"
+              name="UnitsInStock"
+              value={formValue.UnitsInStock}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Units On Order</label>
+            <input
+              type="number"
+              className="form-control"
+              name="UnitsOnOrder"
+              value={formValue.UnitsOnOrder}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Reorder Level</label>
+            <input
+              type="number"
+              className="form-control"
+              name="ReorderLevel"
+              value={formValue.ReorderLevel}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Discontinued</label>
+            <input
+              type="checkbox"
+              className="form-control"
+              name="Discontinued"
+              checked={formValue.Discontinued}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Image</label>
+            <input
+              type="file"
+              className="form-control"
+              name="Image"
+              onChange={handleImageChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
+  );
 };
 
-export default ProductDetail;
+export default AddNewProduct;

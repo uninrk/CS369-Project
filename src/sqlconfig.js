@@ -12,8 +12,8 @@ const config = {
     database: 'Northwind',
     user: 'sa',
     password: 'milkyway',
-    encrypt: false,
-    trustServerCertificate: false
+    encrypt: true,
+    trustServerCertificate: true
 };
 
 const getAllProducts = async () => {
@@ -57,49 +57,9 @@ const getDetailProducts = async (ProductID) => {
     }
 };
 
-const addNewProduct = async (req, res) => {
-    const {
-        ProductName,
-        SupplierID,
-        CategoryID,
-        QuantityPerUnit,
-        UnitPrice,
-        UnitsInStock,
-        UnitsOnOrder,
-        ReorderLevel,
-        Discontinued,
-    } = req.body;
-    const image = req.file ? req.file.path : null;
-
-    try {
-        const pool = await sql.connect(config);
-        const result = await pool.request()
-            .input('ProductName', sql.VarChar, ProductName)
-            .input('SupplierID', sql.Int, SupplierID)
-            .input('CategoryID', sql.Int, CategoryID)
-            .input('QuantityPerUnit', sql.VarChar, QuantityPerUnit)
-            .input('UnitPrice', sql.Decimal(10, 2), UnitPrice)
-            .input('UnitsInStock', sql.Int, UnitsInStock)
-            .input('UnitsOnOrder', sql.Int, UnitsOnOrder)
-            .input('ReorderLevel', sql.Int, ReorderLevel)
-            .input('Discontinued', sql.Bit, Discontinued)
-            .input('Image', sql.VarChar, image)
-            .query(`
-                INSERT INTO Products 
-                (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued, Image)
-                VALUES 
-                (@ProductName, @SupplierID, @CategoryID, @QuantityPerUnit, @UnitPrice, @UnitsInStock, @UnitsOnOrder, @ReorderLevel, @Discontinued, @Image)
-            `);
-        res.status(200).json({ success: true, message: 'Product added successfully.' });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ success: false, message: 'An error occurred while adding the product.' });
-    }
-};
-
 
 module.exports = {
+    config,
     getAllProducts,
     getDetailProducts,
-    addNewProduct
 };
