@@ -11,19 +11,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Link as RouterLink } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
@@ -39,6 +28,18 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+    <Button
+            component={RouterLink}
+            to="/"
+            sx={{
+                position: 'absolute', left: 30, top: 20, transform: 'translate(-10px, 10px)' 
+            }}
+          >
+            <ArrowBackIosIcon sx={{ mr: 1 }} />
+            <Typography component="h5" variant="h6">
+              Back to home page
+            </Typography>
+          </Button>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
