@@ -187,6 +187,7 @@ const AddNewProduct = () => {
           </button>
         </form>
       </div>
+
     </>
   );
 };

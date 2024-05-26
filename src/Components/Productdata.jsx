@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from '../Components/Navbar';
+
 
 const AddNewProduct = () => {
   const [formValue, setFormValue] = useState({
@@ -71,22 +74,123 @@ const AddNewProduct = () => {
     }
   };
 
-    return (
-        <div>
-            <h2>Product Detail</h2>
-            {product ? (
-                <div>
-                    <p><strong>Product Name:</strong> {product.ProductName}</p>
-                    <p><strong>Price:</strong> {product.UnitPrice}</p>
-                    <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
-                    <p><strong>Category Name:</strong> {product.CategoryName}</p>
-                    <p><strong>Description:</strong> {product.Description}</p>
-                </div>
-            ) : (
-                <div>Product not found</div>
-            )}
-        </div>
-    );
+  return (
+    <>
+      <Header />
+      <div className="container">
+        <h2>Add New Product</h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="form-group">
+            <label>Product Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="ProductName"
+              value={formValue.ProductName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Supplier ID</label>
+            <input
+              type="number"
+              className="form-control"
+              name="SupplierID"
+              value={formValue.SupplierID}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Category ID</label>
+            <input
+              type="number"
+              className="form-control"
+              name="CategoryID"
+              value={formValue.CategoryID}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Quantity Per Unit</label>
+            <input
+              type="text"
+              className="form-control"
+              name="QuantityPerUnit"
+              value={formValue.QuantityPerUnit}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Unit Price</label>
+            <input
+              type="number"
+              step="0.01"
+              className="form-control"
+              name="UnitPrice"
+              value={formValue.UnitPrice}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Units In Stock</label>
+            <input
+              type="number"
+              className="form-control"
+              name="UnitsInStock"
+              value={formValue.UnitsInStock}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Units On Order</label>
+            <input
+              type="number"
+              className="form-control"
+              name="UnitsOnOrder"
+              value={formValue.UnitsOnOrder}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Reorder Level</label>
+            <input
+              type="number"
+              className="form-control"
+              name="ReorderLevel"
+              value={formValue.ReorderLevel}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Discontinued</label>
+            <input
+              type="checkbox"
+              className="form-control"
+              name="Discontinued"
+              checked={formValue.Discontinued}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Image</label>
+            <input
+              type="file"
+              className="form-control"
+              name="Image"
+              onChange={handleImageChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default AddNewProduct;
