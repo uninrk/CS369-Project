@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider,Route, Link } from 'react-router-do
 import Home from "./Components/Home.jsx";
 import Login from "./Components/Login"
 // import Navbar from "./Components/Navbar"
-// import Productdata from "./Components/Productdata"
+import Productdata from "./Components/Productdata.jsx"
 
 const router = createBrowserRouter([
     {
@@ -18,7 +18,11 @@ const router = createBrowserRouter([
     {
       path:"/login",
       element: <Login/>
-    }
+    },
+    {
+      path: "/products/:productId",
+      element: <Productdata />,
+    },
   ])
   
 ReactDOM.createRoot(document.getElementById('root')).render(
