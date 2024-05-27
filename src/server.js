@@ -134,8 +134,7 @@ app.post('/api/login', async (req, res) => {
       console.log('Comparing passwords...');
   
       // Hash the incoming password using bcrypt
-      const hashedPassword = await bcrypt.hash(Password, 10); // Adjust cost factor as needed
-      const passwordMatches = await bcrypt.compare(hashedPassword, user.PasswordHash);
+      const passwordMatches = await bcrypt.compare(Password, user.PasswordHash);
   
       console.log(passwordMatches)
       if (!passwordMatches) {
@@ -155,11 +154,15 @@ app.post('/api/login', async (req, res) => {
       console.error('Error during login:', error);
       res.status(500).json({ message: 'Internal server error' });
     } finally {
-      // Close the connection pool (optional, consider connection pooling for efficiency)
       sql.close();
     }
   });
   
+
+
+
+
+
   app.post('/api/register', async (req, res) => {
     const { Username, Password } = req.body;
   
