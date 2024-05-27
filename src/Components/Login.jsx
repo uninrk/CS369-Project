@@ -12,11 +12,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate  } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
+
+  const { setIsAuthenticated } = useAuth(); // Get the setIsAuthenticated function from context
+  const navigate = useNavigate();
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -50,7 +55,8 @@ export default function Login() {
       if (response.ok) {
         // Successful login (redirect, update UI, etc.)
         console.log('Login successful!');
-        // Handle successful login based on your application logic
+        setIsAuthenticated(true); // Set the user as authenticated
+        navigate('/');
       } else {
         // Handle login failure (display error messages, etc.)
         const errorData = await response.json();

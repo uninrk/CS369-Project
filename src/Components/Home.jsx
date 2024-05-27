@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Route, Routes, Link } from 'react-router-dom'; // Removed BrowserRouter as Router
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../Components/Navbar';
+import LoggedInbar from '../Components/LoggedInbar'
+import { useAuth } from '../auth/AuthContext';
 
 class Home extends Component {
+  
   constructor() {
     super();
     this.state = {
@@ -25,54 +28,63 @@ class Home extends Component {
     const { data } = this.state;
 
     return (
-      <>
-        <Header />
-        <div>
-          <div className='row'>
-            <div className='col-md-12'>
-              <h1 className='mt-2'>Product Data</h1>
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Image</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((productData, index) => (
-                    <tr key={index}>
-                      <td>
-                        <Link to={`/products/${productData.ProductID}`} className="no-style-link">
-                          {productData.ProductName}
-                        </Link>
-                      </td>
-                      <td>{productData.UnitPrice}</td>
-                      <td>
-                        {productData.Image ? (
-                          <img
-                            src={URL.createObjectURL(new Blob([new Uint8Array(productData.Image.data)], { type: 'image/jpeg' }))}
-                            alt={productData.ProductName}
-                            style={{ width: '100px', height: 'auto' }}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "https://via.placeholder.com/100";
-                            }}
-                          />
-                        ) : (
-                          <span>Image not available</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      <AuthConsumer>
+        {({ isAuthenticated }) => (
+          <>
+            {isAuthenticated ? <LoggedInbar /> : <Header />}
+            <div>
+              <div className='row'>
+                <div className='col-md-12'>
+                  <h1 className='mt-2'>Product Data</h1>
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.map((productData, index) => (
+                        <tr key={index}>
+                          <td>
+                            <Link to={`/products/${productData.ProductID}`} className="no-style-link">
+                              {productData.ProductName}
+                            </Link>
+                          </td>
+                          <td>{productData.UnitPrice}</td>
+                          <td>
+                            {productData.Image ? (
+                              <img
+                                src={URL.createObjectURL(new Blob([new Uint8Array(productData.Image.data)], { type: 'image/jpeg' }))}
+                                alt={productData.ProductName}
+                                style={{ width: '100px', height: 'auto' }}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = "https://via.placeholder.com/100";
+                                }}
+                              />
+                            ) : (
+                              <span>Image not available</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </>
+          </>
+        )}
+      </AuthConsumer>
     );
   }
 }
+
+const AuthConsumer = (props) => {
+  const auth = useAuth();
+  return props.children(auth);
+};
 
 export default Home;
