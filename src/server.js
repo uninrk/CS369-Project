@@ -185,7 +185,7 @@ app.post('/api/login', async (req, res) => {
           INSERT INTO Login (Username, PasswordHash)
           VALUES (@username, @hashedPassword)
         `);
-  
+    
       res.send('User registered successfully!');
     } catch (error) {
       console.error('Error registering user:', error.message);

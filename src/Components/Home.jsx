@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Routes, Link } from 'react-router-dom'; // Removed BrowserRouter as Router
+import { Route, Routes, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../Components/Navbar';
-import LoggedInbar from '../Components/LoggedInbar'
+import LoggedInbar from '../Components/LoggedInbar';
+import LogOut from '../Components/Navbar';
 import { useAuth } from '../auth/AuthContext';
 
 class Home extends Component {

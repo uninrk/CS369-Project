@@ -8,12 +8,12 @@ app.use(cors());
 app.use(express.json());
 
 const config = {
-    server: 'PAYOY\\SQLEXPRESS',
+    server: 'NNCMILKYWAY\\SQLEXPRESS06',
     database: 'Northwind',
     user: 'sa',
-    password: 'P@ssw0rd',
-    encrypt: false,
-    trustServerCertificate: false,
+    password: 'milkyway',
+    encrypt: true,
+    trustServerCertificate: true,
 };
 
 const getAllProducts = async () => {

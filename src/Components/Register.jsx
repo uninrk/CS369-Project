@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,14 +10,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Ensure useNavigate is imported
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function Register() { // Change the function name to match the component's purpose
+  const navigate = useNavigate(); // Use useNavigate hook
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     // Extract data from the form
     const data = new FormData(event.currentTarget);
     const Username = data.get('email');
@@ -29,15 +29,15 @@ export default function Login() {
       Username,
       Password
     };
-  
+
     // Input validation (optional)
     if (!Username || !Password) {
       // Handle missing fields (e.g., display error messages)
-      console.error('required fields.');
+      console.error('Required fields.');
       return;
     }
-    
-    console.log(Username, Password)
+
+    console.log(Username, Password);
     try {
       // Send data to backend using a secure method (e.g., POST)
       const response = await fetch('http://localhost:8080/api/register', {
@@ -45,39 +45,40 @@ export default function Login() {
         headers: { 'Content-Type': 'application/json' }, // Set appropriate headers
         body: JSON.stringify(userCredentials) // Send data in JSON format
       });
-      console.log(response)
+      console.log(response);
       // Handle the response from the backend
       if (response.ok) {
-        // Successful login (redirect, update UI, etc.)
+        // Successful registration (redirect, update UI, etc.)
         console.log('Register successful!');
-        // Handle successful login based on your application logic
+        // Redirect to the login page
+        navigate('/login');
       } else {
-        // Handle login failure (display error messages, etc.)
+        // Handle registration failure (display error messages, etc.)
         const errorData = await response.json();
         console.error('Register failed:', errorData.message || 'Invalid credentials');
         // Display error message to the user
       }
     } catch (error) {
       // Handle network errors or other unexpected issues
-      console.error('Error during login:', error);
+      console.error('Error during registration:', error);
       // Display a generic error message to the user
     }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-    <Button
-            component={RouterLink}
-            to="/"
-            sx={{
-                position: 'absolute', left: 30, top: 20, transform: 'translate(-10px, 10px)' 
-            }}
-          >
-            <ArrowBackIosIcon sx={{ mr: 1 }} />
-            <Typography component="h5" variant="h6">
-              Back to home page
-            </Typography>
-          </Button>
+      <Button
+        component={RouterLink}
+        to="/"
+        sx={{
+          position: 'absolute', left: 30, top: 20, transform: 'translate(-10px, 10px)'
+        }}
+      >
+        <ArrowBackIosIcon sx={{ mr: 1 }} />
+        <Typography component="h5" variant="h6">
+          Back to home page
+        </Typography>
+      </Button>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -92,7 +93,7 @@ export default function Login() {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-          Registration Form
+            Registration Form
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -115,10 +116,6 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -127,7 +124,6 @@ export default function Login() {
             >
               Register
             </Button>
-            
           </Box>
         </Box>
       </Container>
