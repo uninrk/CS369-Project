@@ -75,10 +75,10 @@ const AddNewProduct = () => {
   return (
     <>
       <Header />
-      <div className="container">
-        <h2>Add New Product</h2>
+      <div className="container mt-4">
+        <h2 className="mb-4">Add New Product</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Product Name</label>
             <input
               type="text"
@@ -89,7 +89,7 @@ const AddNewProduct = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Supplier ID</label>
             <input
               type="number"
@@ -100,7 +100,7 @@ const AddNewProduct = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Category ID</label>
             <input
               type="number"
@@ -111,7 +111,7 @@ const AddNewProduct = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Quantity Per Unit</label>
             <input
               type="text"
@@ -121,7 +121,7 @@ const AddNewProduct = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Unit Price</label>
             <input
               type="number"
@@ -133,7 +133,7 @@ const AddNewProduct = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Units In Stock</label>
             <input
               type="number"
@@ -143,7 +143,7 @@ const AddNewProduct = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Units On Order</label>
             <input
               type="number"
@@ -153,7 +153,7 @@ const AddNewProduct = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Reorder Level</label>
             <input
               type="number"
@@ -163,17 +163,19 @@ const AddNewProduct = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="form-group">
-            <label>Discontinued</label>
-            <input
-              type="checkbox"
-              className="form-control"
-              name="Discontinued"
-              checked={formValue.Discontinued}
-              onChange={handleChange}
-            />
+          <div className="form-group mb-3">
+            <label>
+              Discontinued
+              <input
+                type="checkbox"
+                name="Discontinued"
+                checked={formValue.Discontinued}
+                onChange={handleChange}
+                className="form-check-input ms-2"
+              />
+            </label>
           </div>
-          <div className="form-group">
+          <div className="form-group mb-3">
             <label>Image</label>
             <input
               type="file"
@@ -187,10 +189,8 @@ const AddNewProduct = () => {
           </button>
         </form>
       </div>
-
     </>
   );
 };
 
 export default AddNewProduct;
-
