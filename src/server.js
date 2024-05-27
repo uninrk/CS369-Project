@@ -135,7 +135,7 @@ app.post('/api/login', async (req, res) => {
   
       // Hash the incoming password using bcrypt
       const hashedPassword = await bcrypt.hash(Password, 10); // Adjust cost factor as needed
-      const passwordMatches = await bcrypt.compare(Password, user.PasswordHash);
+      const passwordMatches = await bcrypt.compare(hashedPassword, user.PasswordHash);
   
       console.log(passwordMatches)
       if (!passwordMatches) {
@@ -160,53 +160,37 @@ app.post('/api/login', async (req, res) => {
     }
   });
   
-  app.post('/api/login', async (req, res) => {
+  app.post('/api/register', async (req, res) => {
     const { Username, Password } = req.body;
-    console.log(Username, Password);
-
-    try {
-        console.log('Connecting to database...');
-        const pool = await sql.connect(config);
-        console.log('Connected to database.');
-
-        // Look up user by Username
-        const userRecord = await pool.request()
-            .input('Username', Username)
-            .query(`SELECT * FROM "Login" WHERE Username = @Username`);
-
-        if (userRecord.recordset.length === 0) {
-            return res.status(400).send({ message: 'Invalid username or password.' });
-        }
-
-        const user = userRecord.recordset[0]; // Assuming there's only one matching user
-        console.log('Comparing passwords...');
-
-        // Compare the incoming password with the stored hash
-        
-        const passwordMatches = await bcrypt.compare(Password, user.PasswordHash);
-
-        console.log(passwordMatches);
-        if (!passwordMatches) {
-            return res.status(401).json({ message: 'Invalid username or password.' });
-        }
-
-        // Generate JWT token
-        const payload = { userId: user.UserID }; // Include user ID in the payload
-        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' }); // Set expiration time
-
-        console.log('Login successful, generating token...');
-
-        // Handle successful login
-        res.cookie('token', token, { httpOnly: true });
-        res.json({ message: 'Login successful', token });
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    } finally {
-        // Close the connection pool
-        sql.close();
+  
+    if (!Username || !Password ) {
+      return res.status(400).send('Username and password are required.');
     }
-});
+  
+    try {
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(Password, 10);
+  
+      // Connect to the database
+      const pool = await sql.connect(config);
+  
+      // Insert user data using parameterized query
+      await pool.request()
+        .input('Username', Username)
+        .input('hashedPassword', hashedPassword)
+        .query(`
+          INSERT INTO Login (Username, PasswordHash)
+          VALUES (@username, @hashedPassword)
+        `);
+  
+      res.send('User registered successfully!');
+    } catch (error) {
+      console.error('Error registering user:', error.message);
+      res.status(500).send('Internal server error. Failed to register user.');
+    } finally {
+      sql.close();
+    }
+  });
 
   
   // Start the server
