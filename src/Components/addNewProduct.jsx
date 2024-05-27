@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from '../Components/Navbar';
+// import Header from '../Components/Navbar';
+import LoggedInbar from '../Components/LoggedInbar';
 
 const AddNewProduct = () => {
   const [formValue, setFormValue] = useState({
@@ -74,7 +75,7 @@ const AddNewProduct = () => {
 
   return (
     <>
-      <Header />
+      <LoggedInbar />
       <div className="container mt-4">
         <h2 className="mb-4">Add New Product</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
