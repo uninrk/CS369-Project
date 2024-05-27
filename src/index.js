@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider,Route, Link } from 'react-router-do
 import Home from "./Components/Home.jsx";
 import Login from "./Components/Login"
 import AddNewProduct from "./Components/addNewProduct"
-// import Navbar from "./Components/Navbar"
+import Register from "./Components/Register.jsx"
 import Productdata from "./Components/Productdata.jsx"
 
 const router = createBrowserRouter([
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
     {
       path: "/products/:productId",
       element: <Productdata />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
     },
   ])
   

@@ -8,7 +8,8 @@ const multer = require('multer');
 const sql = require('mssql');
 const port = 8080;
 const fs = require('fs');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Enable CORS
 app.use(cors());
@@ -105,6 +106,105 @@ app.post('/api/products/add', upload.single('Image'), async (req, res) => {
     } catch (error) {
       console.error('Error connecting to database:', error);
       res.status(500).json({ success: false, message: 'An error occurred while connecting to the database' });
+    }
+});
+
+const secretKey = '123456789';
+
+app.post('/api/login', async (req, res) => {
+    const { Username, Password } = req.body;
+    console.log(Username, Password);
+  
+    try {
+      console.log('Connecting to database...');
+      const pool = await sql.connect(config);
+      console.log('Connected to database.');
+  
+      // Look up user by Username
+      const userRecord = await pool.request()
+        .input('Username', Username)
+        .query(`SELECT * FROM "Login" WHERE Username = @Username`);
+  
+        if (userRecord.recordset.length === 0) {
+            return res.status(400).send({ message: 'Invalid username or password.' });
+        }
+  
+      const user = userRecord.recordset[0]; // Assuming there's only one matching user
+  
+      console.log('Comparing passwords...');
+  
+      // Hash the incoming password using bcrypt
+      const hashedPassword = await bcrypt.hash(Password, 10); // Adjust cost factor as needed
+      const passwordMatches = await bcrypt.compare(Password, user.PasswordHash);
+  
+      console.log(passwordMatches)
+      if (!passwordMatches) {
+        return res.status(401).json({ message: 'Not match' });
+      }
+  
+      // Generate JWT token
+      const payload = { userId: user.UserID }; // Include user ID in the payload
+      const token = jwt.sign(payload, secretKey, { expiresIn: '1h' }); // Set expiration time
+  
+      console.log('Login successful, generating token...');
+  
+      // Handle successful login
+      res.cookie('token', token, { httpOnly: true });
+      res.json({ message: 'Login successful', token });
+    } catch (error) {
+      console.error('Error during login:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    } finally {
+      // Close the connection pool (optional, consider connection pooling for efficiency)
+      sql.close();
+    }
+  });
+  
+  app.post('/api/login', async (req, res) => {
+    const { Username, Password } = req.body;
+    console.log(Username, Password);
+
+    try {
+        console.log('Connecting to database...');
+        const pool = await sql.connect(config);
+        console.log('Connected to database.');
+
+        // Look up user by Username
+        const userRecord = await pool.request()
+            .input('Username', Username)
+            .query(`SELECT * FROM "Login" WHERE Username = @Username`);
+
+        if (userRecord.recordset.length === 0) {
+            return res.status(400).send({ message: 'Invalid username or password.' });
+        }
+
+        const user = userRecord.recordset[0]; // Assuming there's only one matching user
+        console.log('Comparing passwords...');
+
+        // Compare the incoming password with the stored hash
+        
+        const passwordMatches = await bcrypt.compare(Password, user.PasswordHash);
+
+        console.log(passwordMatches);
+        if (!passwordMatches) {
+            return res.status(401).json({ message: 'Invalid username or password.' });
+        }
+
+        // Generate JWT token
+        const payload = { userId: user.UserID }; // Include user ID in the payload
+        const token = jwt.sign(payload, secretKey, { expiresIn: '1h' }); // Set expiration time
+
+        console.log('Login successful, generating token...');
+
+        // Handle successful login
+        res.cookie('token', token, { httpOnly: true });
+        res.json({ message: 'Login successful', token });
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    } finally {
+        // Close the connection pool
+        sql.close();
     }
 });
 

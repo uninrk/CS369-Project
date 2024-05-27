@@ -40,7 +40,7 @@ export default function Login() {
     console.log(Username, Password)
     try {
       // Send data to backend using a secure method (e.g., POST)
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('http://localhost:8080/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }, // Set appropriate headers
         body: JSON.stringify(userCredentials) // Send data in JSON format
@@ -49,12 +49,12 @@ export default function Login() {
       // Handle the response from the backend
       if (response.ok) {
         // Successful login (redirect, update UI, etc.)
-        console.log('Login successful!');
+        console.log('Register successful!');
         // Handle successful login based on your application logic
       } else {
         // Handle login failure (display error messages, etc.)
         const errorData = await response.json();
-        console.error('Login failed:', errorData.message || 'Invalid credentials');
+        console.error('Register failed:', errorData.message || 'Invalid credentials');
         // Display error message to the user
       }
     } catch (error) {
@@ -92,7 +92,7 @@ export default function Login() {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+          Registration Form
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -125,20 +125,9 @@ export default function Login() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Register
             </Button>
-            <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            
           </Box>
         </Box>
       </Container>
