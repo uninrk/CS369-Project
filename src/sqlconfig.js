@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const config = {
-    server: 'PAYOY\\SQLEXPRESS',
+    server: 'INKU\\SQLEXPRESS',
     database: 'Northwind',
     user: 'sa',
     password: 'P@ssw0rd',

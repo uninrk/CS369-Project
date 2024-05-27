@@ -12,14 +12,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     // Extract data from the form
     const data = new FormData(event.currentTarget);
     const Username = data.get('email');
@@ -29,14 +30,14 @@ export default function Login() {
       Username,
       Password
     };
-  
+
     // Input validation (optional)
     if (!Username || !Password) {
       // Handle missing fields (e.g., display error messages)
       console.error('required fields.');
       return;
     }
-    
+
     console.log(Username, Password)
     try {
       // Send data to backend using a secure method (e.g., POST)
@@ -50,6 +51,7 @@ export default function Login() {
       if (response.ok) {
         // Successful login (redirect, update UI, etc.)
         console.log('Register successful!');
+        navigate('/login');
         // Handle successful login based on your application logic
       } else {
         // Handle login failure (display error messages, etc.)
@@ -66,18 +68,18 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-    <Button
-            component={RouterLink}
-            to="/"
-            sx={{
-                position: 'absolute', left: 30, top: 20, transform: 'translate(-10px, 10px)' 
-            }}
-          >
-            <ArrowBackIosIcon sx={{ mr: 1 }} />
-            <Typography component="h5" variant="h6">
-              Back to home page
-            </Typography>
-          </Button>
+      <Button
+        component={RouterLink}
+        to="/"
+        sx={{
+          position: 'absolute', left: 30, top: 20, transform: 'translate(-10px, 10px)'
+        }}
+      >
+        <ArrowBackIosIcon sx={{ mr: 1 }} />
+        <Typography component="h5" variant="h6">
+          Back to home page
+        </Typography>
+      </Button>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -92,7 +94,7 @@ export default function Login() {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-          Registration Form
+            Registration Form
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -127,7 +129,7 @@ export default function Login() {
             >
               Register
             </Button>
-            
+
           </Box>
         </Box>
       </Container>
