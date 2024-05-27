@@ -10,13 +10,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Ensure useNavigate is imported
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
-export default function Register() { // Change the function name to match the component's purpose
-  const navigate = useNavigate(); // Use useNavigate hook
-
+export default function Login() {
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,7 +36,7 @@ export default function Register() { // Change the function name to match the co
       return;
     }
 
-    console.log(Username, Password);
+    console.log(Username, Password)
     try {
       // Send data to backend using a secure method (e.g., POST)
       const response = await fetch('http://localhost:8080/api/register', {
@@ -50,8 +49,8 @@ export default function Register() { // Change the function name to match the co
       if (response.ok) {
         // Successful registration (redirect, update UI, etc.)
         console.log('Register successful!');
-        // Redirect to the login page
         navigate('/login');
+        // Handle successful login based on your application logic
       } else {
         // Handle registration failure (display error messages, etc.)
         const errorData = await response.json();
