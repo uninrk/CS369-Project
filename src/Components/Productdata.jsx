@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import '../App.css';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -39,21 +43,38 @@ const ProductDetail = () => {
   }
 
   return (
-    <div>
-      {product ? (
-        <div className='container'>
-          <h2>Product Detail</h2><br></br>
-          <p><strong>Product Name:</strong> {product.ProductName}</p>
-          <p><strong>Price:</strong> {product.UnitPrice}</p>
-          <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
-          <p><strong>Category ID:</strong> {product.CategoryID}</p>
-          <p><strong>Category Name:</strong> {product.CategoryName}</p>
-          <p><strong>Description:</strong> {product.Description}</p>
+    <>
+    <Button
+        component={RouterLink}
+        to="/"
+        sx={{
+            position: 'absolute', left: 30, top: 60, transform: 'translate(-10px, 10px)' 
+        }}
+      >
+        <ArrowBackIosIcon sx={{ mr: 1 }} />
+        <Typography component="h5" variant="h6">
+          Back
+        </Typography>
+      </Button>
+      <div className="d-flex justify-content-center align-items-center min-vh-100">
+      <div className="card shadow w-50">
+        <div className="card-body text-center">
+          <h2>Product Detail</h2>
+          {product ? (
+            <>
+              <p><strong>Product Name:</strong> {product.ProductName}</p>
+              <p><strong>Price:</strong> {product.UnitPrice}</p>
+              <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
+              <p><strong>Category Name:</strong> {product.CategoryName}</p>
+              <p><strong>Description:</strong> {product.Description}</p>
+            </>
+          ) : (
+            <div>Product not found</div>
+          )}
         </div>
-      ) : (
-        <div>Product not found</div>
-      )}
+      </div>
     </div>
+    </>
   );
 };
 
