@@ -38,7 +38,8 @@ const getDetailProducts = async (ProductID) => {
                 p.CategoryID,
                 c.CategoryName,
                 c.Description,
-                p.UnitsInStock
+                p.UnitsInStock,
+                p.Image
             FROM 
                 Products p
             JOIN 

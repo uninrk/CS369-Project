@@ -30,55 +30,47 @@ class Home extends Component {
 
     return (
       <AuthConsumer>
-        {({ isAuthenticated }) => (
-          <>
-            {isAuthenticated ? <LoggedInbar /> : <Header />}
-            <div>
-              <div className='row'>
-                <div className='col-md-12'>
-                  <h1 className='mt-2'>Product Data</h1>
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Image</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.map((productData, index) => (
-                        <tr key={index}>
-                          <td>
-                            <Link to={`/products/${productData.ProductID}`} className="no-style-link">
-                              {productData.ProductName}
-                            </Link>
-                          </td>
-                          <td>{productData.UnitPrice}</td>
-                          <td>
-                            {productData.Image ? (
-                              <img
-                                src={URL.createObjectURL(new Blob([new Uint8Array(productData.Image.data)], { type: 'image/jpeg' }))}
-                                alt={productData.ProductName}
-                                style={{ width: '100px', height: 'auto' }}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = "https://via.placeholder.com/100";
-                                }}
-                              />
-                            ) : (
-                              <span>Image not available</span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+  {({ isAuthenticated }) => (
+    <>
+      {isAuthenticated ? <LoggedInbar /> : <Header />}
+      <div className="row">
+        <div className="col-md-12">
+          <h3 className="d-flex justify-content-center pt-3">Product Data</h3>
+          <div className="d-flex flex-wrap justify-content-around">
+            {data.map((productData, index) => (
+              <Link key={index} to={`/products/${productData.ProductID}`} className="card m-2" style={{ width: "20rem", textDecoration: 'none' }}>
+                <div className="card-body">
+                  <h5 className="card-title">{productData.ProductName}</h5>
+                  <p className="card-text">Price: {productData.UnitPrice}</p>
+                  {productData.Image ? (
+                    <img
+                      src={URL.createObjectURL(
+                        new Blob([new Uint8Array(productData.Image.data)], {
+                          type: "image/jpeg",
+                        })
+                      )}
+                      alt={productData.ProductName}
+                      className="card-img-bottom"
+                      style={{ width: "100%", height: "150px", objectFit: "cover" }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://via.placeholder.com/150";
+                      }}
+                    />
+                  ) : (
+                    <p className="card-text">Image not available</p>
+                  )}
                 </div>
-              </div>
-            </div>
-          </>
-        )}
-      </AuthConsumer>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  )}
+</AuthConsumer>
+
+
     );
   }
 }

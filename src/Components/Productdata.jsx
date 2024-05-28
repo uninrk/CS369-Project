@@ -21,6 +21,7 @@ const ProductDetail = () => {
           throw new Error(`HTTP error: Status ${response.status}`);
         }
         const productData = await response.json();
+        console.log(productData)
         setProduct(productData);
         setError(null);
       } catch (err) {
@@ -58,15 +59,32 @@ const ProductDetail = () => {
       </Button>
       <div className="d-flex justify-content-center align-items-center min-vh-100">
       <div className="card shadow w-50">
-        <div className="card-body text-center">
-          <h2>Product Detail</h2>
+        <div className="card-body ">
+          <h2 className="text-center" >Product Detail</h2>
           {product ? (
             <>
+            <div className="d-flex justify-content-center mb-4">
+                    <img
+                      src={URL.createObjectURL(
+                        new Blob([new Uint8Array(product.Image.data)], {
+                          type: "image/jpeg",
+                        })
+                      )}
+                      alt={product.ProductName}
+                      className="card-img-bottom"
+                      style={{ width: "30%", height: "50%", objectFit: "cover" }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://via.placeholder.com/150";
+                      }}
+                    />
+              </div>
               <p><strong>Product Name:</strong> {product.ProductName}</p>
-              <p><strong>Price:</strong> {product.UnitPrice}</p>
-              <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
               <p><strong>Category Name:</strong> {product.CategoryName}</p>
               <p><strong>Description:</strong> {product.Description}</p>
+              
+              <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
+              <p><strong>Price:</strong> {product.UnitPrice}</p>
             </>
           ) : (
             <div>Product not found</div>
