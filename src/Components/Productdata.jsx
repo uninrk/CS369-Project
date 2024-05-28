@@ -45,22 +45,22 @@ const ProductDetail = () => {
 
   return (
     <>
-    <Button
-        component={RouterLink}
-        to="/"
-        sx={{
-            position: 'absolute', left: 30, top: 60, transform: 'translate(-10px, 10px)' 
-        }}
-      >
-        <ArrowBackIosIcon sx={{ mr: 1 }} />
-        <Typography component="h5" variant="h6">
-          Back
-        </Typography>
-      </Button>
       <div className="d-flex justify-content-center align-items-center min-vh-100">
       <div className="card shadow w-50">
         <div className="card-body ">
-          <h2 className="text-center" >Product Detail</h2>
+        <Button
+        component={RouterLink}
+        to="/"
+        sx={{
+            position: 'absolute', left: 30, top: 10, transform: 'translate(-10px, 10px)' 
+        }}
+      >
+        <ArrowBackIosIcon sx={{ mr: 1 }} />
+        <Typography component="h3" variant="h6">
+          Back
+        </Typography>
+      </Button>
+          <h3 className="text-center pt-2" >Product Detail</h3>
           {product ? (
             <>
             <div className="d-flex justify-content-center mb-4">
