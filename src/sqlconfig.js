@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const config = {
-    server: 'INKU\\SQLEXPRESS',
+    server: 'PAYOY\\SQLEXPRESS',
     database: 'Northwind',
     user: 'sa',
     password: 'P@ssw0rd',
@@ -38,7 +38,8 @@ const getDetailProducts = async (ProductID) => {
                 p.CategoryID,
                 c.CategoryName,
                 c.Description,
-                p.UnitsInStock
+                p.UnitsInStock,
+                p.Image
             FROM 
                 Products p
             JOIN 
