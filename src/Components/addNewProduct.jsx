@@ -16,6 +16,8 @@ const AddNewProduct = () => {
     Discontinued: false,
     Image: null,
   });
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -54,7 +56,8 @@ const AddNewProduct = () => {
       const responseData = await response.json();
       console.log('Response:', responseData);
 
-      alert(`Product added successfully! Product ID: ${responseData.productId}`);
+      setToastMessage(`Product added successfully! Product ID: ${responseData.productId}`);
+      setShowToast(true);
       setFormValue({
         ProductName: '',
         SupplierID: '',
@@ -69,16 +72,17 @@ const AddNewProduct = () => {
       });
     } catch (error) {
       console.error('Error:', error);
-      alert(`An error occurred while adding the product: ${error.message}`);
+      setToastMessage(`An error occurred while adding the product: ${error.message}`);
+      setShowToast(true);
     }
   };
 
   return (
     <>
       <LoggedInbar />
-      <div className="container mt-4">
-        <h2 className="mb-4">Add New Product</h2>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <div className="container pt-4 text-xl-start">
+        <h2 className="mb-4 text-center">Add New Product</h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data" className="border p-4 shadow-sm bg-light rounded">
           <div className="form-group mb-3">
             <label>Product Name</label>
             <input
@@ -165,7 +169,7 @@ const AddNewProduct = () => {
             />
           </div>
           <div className="form-group mb-3">
-            <label>
+            <label className="form-check-label">
               Discontinued
               <input
                 type="checkbox"
@@ -185,10 +189,27 @@ const AddNewProduct = () => {
               onChange={handleImageChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
+          <button type="submit" className="btn btn-primary w-100">
+            Add New Product
           </button>
         </form>
+
+        {/* Toast Notification */}
+        {showToast && (
+          <div className="toast show position-fixed bottom-0 end-0 m-4" role="alert">
+            <div className="toast-header">
+              <strong className="me-auto">Notification</strong>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+                onClick={() => setShowToast(false)}
+              ></button>
+            </div>
+            <div className="toast-body">{toastMessage}</div>
+          </div>
+        )}
       </div>
     </>
   );

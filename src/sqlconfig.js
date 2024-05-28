@@ -8,10 +8,10 @@ app.use(cors());
 app.use(express.json());
 
 const config = {
-    server: 'PAYOY\\SQLEXPRESS',
+    server: 'demo.c3wmusagggqn.us-east-1.rds.amazonaws.com',
     database: 'Northwind',
     user: 'sa',
-    password: 'P@ssw0rd',
+    password: 'Password',
     encrypt: false,
     trustServerCertificate: false,
 };
