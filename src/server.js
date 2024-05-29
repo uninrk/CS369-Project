@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const upload = multer({ dest: 'uploads/' });
 
 const corsOptions = {
-  origin: 'http://54.234.45.76:3000/',
+  // origin: 'http://54.83.184.2:3000/',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
