@@ -1,3 +1,11 @@
+# สมาชิก
+- ประกายพลอย ศิริธัญญาลักษณ์ 6409610653
+- ณัฐณิชา พินิจสัจจธรรม 6409682694
+- อิงรัก อุตตมางคพงศ์ 6409682975
+
+# Deploy & Demo Video
+https://drive.google.com/file/d/1epCS3HtxuTMShTUz3ytCk9-dGoOvs8EB/view?usp=sharing
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
