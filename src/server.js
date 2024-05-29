@@ -12,7 +12,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: 'http://54.242.137.165:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+}));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
