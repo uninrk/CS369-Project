@@ -7,32 +7,21 @@ import LogOut from '../Components/Navbar';
 import { useAuth } from '../auth/AuthContext';
 
 class Home extends Component {
-
   constructor() {
     super();
     this.state = {
       data: [],
-    };
-    this.fetchData(); // Calling fetchData directly in the constructor
+    }
   }
 
-  async fetchData() {
-    try {
-      const response = await fetch('/api/products', {
-        method: 'GET',
+  componentDidMount() {
+    fetch('http://localhost:8080/api/products')
+      .then((Response) => Response.json())
+      .then((findresponse) => {
+        this.setState({
+          data: findresponse,
+        });
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      this.setState({
-        data: data,
-      });
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
   }
 
   render() {
