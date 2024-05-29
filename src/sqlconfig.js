@@ -19,7 +19,7 @@ const config = {
 const getAllProducts = async () => {
     try {
         const pool = await sql.connect(config);
-        const sqlQuery = 'SELECT * FROM Products WHERE ProductID BETWEEN 78 AND 108';
+        const sqlQuery = 'SELECT * FROM Products';
         const result = await pool.request().query(sqlQuery);
         return result.recordset
     } catch (err) {
