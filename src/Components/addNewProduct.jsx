@@ -42,7 +42,7 @@ const AddNewProduct = () => {
     try {
       console.log('Submitting form data:', formData);
 
-      const response = await fetch('http://localhost:8080/api/products/add', {
+      const response = await fetch('/api/products/add', {
         method: 'POST',
         body: formData,
       });

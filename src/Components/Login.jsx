@@ -39,7 +39,7 @@ export default function Login() {
     const data = new FormData(event.currentTarget);
     const Username = data.get('email');
     const Password = data.get('password');
-    
+
     if (!Username || !Password) {
       setDialogContent('Both email and password fields are required.');
       setOpen(true);
@@ -54,12 +54,12 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userCredentials),
       });
-      
+
       if (response.ok) {
         console.log('Login successful!');
         setIsAuthenticated(true);

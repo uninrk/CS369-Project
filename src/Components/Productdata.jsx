@@ -16,7 +16,7 @@ const ProductDetail = () => {
     // Fetch product details based on the productId
     const fetchProductDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/products/${productId}`);
+        const response = await fetch(`/api/products/${productId}`);
         if (!response.ok) {
           throw new Error(`HTTP error: Status ${response.status}`);
         }
@@ -46,52 +46,52 @@ const ProductDetail = () => {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card shadow w-50">
-        <div className="card-body ">
-        <Button
-        component={RouterLink}
-        to="/"
-        sx={{
-            position: 'absolute', left: 30, top: 10, transform: 'translate(-10px, 10px)' 
-        }}
-      >
-        <ArrowBackIosIcon sx={{ mr: 1 }} />
-        <Typography component="h3" variant="h6">
-          Back
-        </Typography>
-      </Button>
-          <h3 className="text-center pt-2" >Product Detail</h3>
-          {product ? (
-            <>
-            <div className="d-flex justify-content-center mb-4">
-                    <img
-                      src={URL.createObjectURL(
-                        new Blob([new Uint8Array(product.Image.data)], {
-                          type: "image/jpeg",
-                        })
-                      )}
-                      alt={product.ProductName}
-                      className="card-img-bottom"
-                      style={{ width: "30%", height: "50%", objectFit: "cover" }}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://via.placeholder.com/150";
-                      }}
-                    />
-              </div>
-              <p><strong>Product Name:</strong> {product.ProductName}</p>
-              <p><strong>Category Name:</strong> {product.CategoryName}</p>
-              <p><strong>Description:</strong> {product.Description}</p>
-              
-              <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
-              <p><strong>Price:</strong> {product.UnitPrice}</p>
-            </>
-          ) : (
-            <div>Product not found</div>
-          )}
+        <div className="card shadow w-50">
+          <div className="card-body ">
+            <Button
+              component={RouterLink}
+              to="/"
+              sx={{
+                position: 'absolute', left: 30, top: 10, transform: 'translate(-10px, 10px)'
+              }}
+            >
+              <ArrowBackIosIcon sx={{ mr: 1 }} />
+              <Typography component="h3" variant="h6">
+                Back
+              </Typography>
+            </Button>
+            <h3 className="text-center pt-2" >Product Detail</h3>
+            {product ? (
+              <>
+                <div className="d-flex justify-content-center mb-4">
+                  <img
+                    src={URL.createObjectURL(
+                      new Blob([new Uint8Array(product.Image.data)], {
+                        type: "image/jpeg",
+                      })
+                    )}
+                    alt={product.ProductName}
+                    className="card-img-bottom"
+                    style={{ width: "30%", height: "50%", objectFit: "cover" }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://via.placeholder.com/150";
+                    }}
+                  />
+                </div>
+                <p><strong>Product Name:</strong> {product.ProductName}</p>
+                <p><strong>Category Name:</strong> {product.CategoryName}</p>
+                <p><strong>Description:</strong> {product.Description}</p>
+
+                <p><strong>Units In Stock:</strong> {product.UnitsInStock}</p>
+                <p><strong>Price:</strong> {product.UnitPrice}</p>
+              </>
+            ) : (
+              <div>Product not found</div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
