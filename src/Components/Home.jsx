@@ -11,17 +11,26 @@ class Home extends Component {
     super();
     this.state = {
       data: [],
-    }
+    };
   }
 
-  componentDidMount() {
-    fetch('http://localhost:8080/api/products')
-      .then((Response) => Response.json())
-      .then((findresponse) => {
-        this.setState({
-          data: findresponse,
-        });
+  async componentDidMount() {
+    try {
+      const response = await fetch('/api/products', {
+        method: 'GET',
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      this.setState({
+        data: data,
+      });
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   }
 
   render() {
