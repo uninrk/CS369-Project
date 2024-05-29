@@ -10,7 +10,7 @@ const Home = () => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    fetch('http://34.204.37.176:8080/api/products')
+    fetch('http://100.26.22.135:8080/api/products')
       .then((response) => response.json())
       .then((findresponse) => {
         setData(findresponse);
