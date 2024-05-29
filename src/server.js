@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken');
 
 // Enable CORS
 app.use(cors({
-  origin: 'http://54.242.137.165:3000',
+  origin: 'http://34.204.37.176:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
