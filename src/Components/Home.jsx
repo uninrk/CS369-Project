@@ -1,36 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../Components/Navbar';
 import LoggedInbar from '../Components/LoggedInbar';
-import LogOut from '../Components/Navbar';
 import { useAuth } from '../auth/AuthContext';
 
-class Home extends Component {
-  
-  constructor() {
-    super();
-    this.state = {
-      data: [],
-    };
-  }
+const Home = () => {
+  const [data, setData] = useState([]);
+  const { isAuthenticated } = useAuth();
 
-  componentDidMount() {
+  useEffect(() => {
     fetch('http://54.242.137.165:8080/api/products')
-      .then((Response) => Response.json())
+      .then((response) => response.json())
       .then((findresponse) => {
-        this.setState({
-          data: findresponse,
-        });
+        setData(findresponse);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
       });
-  }
+  }, []); // Empty dependency array ensures this runs once after the initial render
 
-  render() {
-    const { data } = this.state;
-
-    return (
-      <AuthConsumer>
-  {({ isAuthenticated }) => (
+  return (
     <>
       {isAuthenticated ? <LoggedInbar /> : <Header />}
       <div className="row">
@@ -67,17 +57,7 @@ class Home extends Component {
         </div>
       </div>
     </>
-  )}
-</AuthConsumer>
-
-
-    );
-  }
-}
-
-const AuthConsumer = (props) => {
-  const auth = useAuth();
-  return props.children(auth);
+  );
 };
 
 export default Home;
