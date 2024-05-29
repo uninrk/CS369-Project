@@ -6,6 +6,7 @@ module.exports = function (app) {
         createProxyMiddleware({
             target: 'http://localhost:8080',
             changeOrigin: true,
+            timeout: 600000, // Timeout set to 10 minutes (600,000 milliseconds)
         })
     );
 };
